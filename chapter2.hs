@@ -41,3 +41,10 @@ doubleRangeNoTeens upper = [doubleMe x|x<-[1..upper],doubleMe x <10 || doubleMe 
 doubleRangeno6_8 upper = [doubleMe x|x<-[1..upper],doubleMe x /=6, doubleMe x/=8]
 
 describeRange upper = [if odd x then "ODD" else "EVEN"|x<-[1..upper]]
+removePunctuation string = [x | x<- string, x `elem` ['a'..'z']++['A'..'Z']++[' ']]
+
+-- Tuples
+sides = [(a,b,c)|c<-[1..10],b<-[1..10],a<-[1..10]]
+triangles = [(a,b,c)|c<-[1..10],b<-[1..c],a<-[1..b]]
+righttriangles = [(a,b,c)|c<-[1..10],b<-[1..c],a<-[1..b], a^2+b^2==c^2]
+righttrianglesp24 = [(a,b,c)|c<-[1..10],b<-[1..c],a<-[1..b], a^2+b^2==c^2, a+b+c==24]
