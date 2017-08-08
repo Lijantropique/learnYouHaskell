@@ -3,6 +3,10 @@ lucky :: (Num a, Eq a) => a -> String
 lucky 7 = "Lucky Number seven!"
 lucky x = "Sorry, you're out of luck!"
 
+sayMe :: (Integral a, Ord a) => a -> String
+sayMe <5 = ["One!", "Two!", "Three!", "Four!", "Five!"] -- !! x
+sayMe x = "Not between 1 and 5!"
+
 factorial :: (Integral a) => a -> a
 factorial 0 = 1
 factorial n = n * factorial (n-1)
