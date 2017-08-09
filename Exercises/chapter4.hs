@@ -93,4 +93,18 @@ cylinder' r h = sideArea + 2 * topArea
         topArea     = pi * r^2
 
 calcBmis :: (RealFloat a) => [(a,a)] -> [a]
-calcBmis xs = [bmi | (w,h) <- xs, let bmi = w/h^2]
+calcBmis xs = [bmi | (w,h) <- xs, let bmi = w/h^2, bmi>=20]
+
+calcBmis' :: (RealFloat a) => [(a,a)] -> [a]
+calcBmis' xs = [t2 | (w,h) <- xs, let t1=w; t2=h;  bmi=t1*t2]
+
+
+-- Case expressions
+velocity2' :: (Num a, Fractional a, Eq a) => [a] -> a
+velocity2' xs = case xs of
+    [] -> error "Not enough arguments provided"
+    (flow:[]) -> error "Not enough arguments provided"
+    (flow:area:[]) -> error "Not enough arguments provided"
+    (flow:area:[1]) -> (flow/area)*100
+    (flow:area:[2]) -> (flow/area)*200
+    otherwise -> error " The only options availbale are 1 or 2"
