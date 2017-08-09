@@ -27,3 +27,14 @@ myButLast'' (lt:[]) = error "Only one element"
 myButLast'' xs@(x:t)
     |length xs ==1 = x
     |otherwise =  myButLast t
+
+-- Problem 3
+elementAt :: [a] -> Int -> a
+elementAt xs idx = xs!!(idx-1)
+
+elementAt' :: [a] -> Int -> a
+elementAt' xs@(x:t) idx
+    |idx < 1    = error "Minimum index is 1"
+    |idx == 1   = x
+    |idx <= length xs = elementAt t (idx -1)
+    |otherwise  = error "Index greater than list length"
