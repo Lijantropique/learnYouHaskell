@@ -59,7 +59,7 @@ initials fn "" = error "Just fn"
 initials (f:fn) (l:ln) = [f] ++ "." ++ [l] ++"."
 
 
-foo x = x   -- global definition of foo"    
+foo x = x   -- global definition of foo"
 makeup :: (Integral a, Ord a) => a -> String
 makeup 0
     |foo 0 < 1 = "Foo less zero"
@@ -68,3 +68,14 @@ makeup 1
 makeup x
     |foo x >1 = "Foo is greater than one"
     |otherwise = "Foo is strange"
+
+isPrime :: Int -> Bool
+isPrime 0 = False
+isPrime a = foo a (a-1)
+    where
+        foo a b
+            |b == 1         = True
+            |a `mod` b ==0  = False
+            |otherwise      = go a (b-1)
+
+-- Let it be
