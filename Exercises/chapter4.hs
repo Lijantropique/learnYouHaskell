@@ -76,6 +76,21 @@ isPrime a = foo a (a-1)
         foo a b
             |b == 1         = True
             |a `mod` b ==0  = False
-            |otherwise      = go a (b-1)
+            |otherwise      = foo a (b-1)
 
 -- Let it be
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+    let
+        sideArea    = 2 * pi *r *h
+        topArea     = pi * r^2
+        in sideArea + 2 * topArea
+
+cylinder' :: (RealFloat a) => a -> a -> a
+cylinder' r h = sideArea + 2 * topArea
+    where
+        sideArea    = 2 * pi *r *h
+        topArea     = pi * r^2
+
+calcBmis :: (RealFloat a) => [(a,a)] -> [a]
+calcBmis xs = [bmi | (w,h) <- xs, let bmi = w/h^2]
