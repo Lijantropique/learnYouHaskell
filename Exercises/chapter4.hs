@@ -57,3 +57,14 @@ initials :: String -> String -> String
 initials "" ln = error "Just ln"
 initials fn "" = error "Just fn"
 initials (f:fn) (l:ln) = [f] ++ "." ++ [l] ++"."
+
+
+foo x = x   -- global definition of foo"    
+makeup :: (Integral a, Ord a) => a -> String
+makeup 0
+    |foo 0 < 1 = "Foo less zero"
+makeup 1
+    |foo 1 <1 = "Foo less one"
+makeup x
+    |foo x >1 = "Foo is greater than one"
+    |otherwise = "Foo is strange"
