@@ -45,3 +45,23 @@ elem' _ [] = False
 elem' e (x:xs)
     |e == x = True
     |otherwise = e `elem'` xs
+
+-- Quick, sort!
+quickSort :: (Ord a) => [a] -> [a]
+quickSort [] = []
+quickSort (x:t) = quickSort [i | i <- t,i<=x] ++ [x] ++ quickSort [i | i <- t,i>=x]
+
+quickSort' :: (Ord a) => [a] -> [a]
+quickSort' [] = []
+quickSort' (x:t) = smaller ++ [x] ++ bigger
+    where
+        smaller = quickSort [i | i <- t,i<=x]
+        bigger = quickSort [i | i <- t,i>=x]
+
+quickSort'' :: (Ord a) => [a] -> [a]
+quickSort'' [] = []
+quickSort'' (x:t) =
+    let
+        smaller = quickSort [i | i <- t,i<=x]
+        bigger = quickSort [i | i <- t,i>=x]
+        in smaller ++ [x] ++ bigger
