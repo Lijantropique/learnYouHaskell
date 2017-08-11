@@ -38,3 +38,37 @@ elementAt' xs@(x:t) idx
     |idx == 1   = x
     |idx <= length xs = elementAt t (idx -1)
     |otherwise  = error "Index greater than list length"
+
+-- Problem 4
+myLength :: [a] -> Int
+myLength [] = 0
+myLength (x:xs) = 1 + myLength xs
+
+myLength' :: [a] -> Int
+myLength' xs = sum[1|x<-xs]
+
+-- Problem 5
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (x:xs) = myReverse xs ++ [x]
+
+myReverse' :: [a] -> [a]
+myReverse' lst = reverse' lst []
+    where
+        reverse' [] reversed = reversed
+        reverse' (x:xs) reversed = reverse' xs (x:reversed)
+
+-- Problem 6
+isPalindrome :: (Eq a) => [a] -> Bool
+isPalindrome [] = True
+isPalindrome xs = xs == (reverse xs)
+
+isPalindrome' :: (Eq a) => [a] -> Bool
+isPalindrome' [] = True
+isPalindrome' (x:xs)
+    |null xs = True
+    |otherwise = (x == last xs) && isPalindrome' (init xs)
+
+
+-- Problem 7
+-- Wait until learn how to declare new datatypes
