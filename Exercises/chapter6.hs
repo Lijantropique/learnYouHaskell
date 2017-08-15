@@ -76,3 +76,31 @@ c = myFun 5
         -- (map (*) [0..]) -> [0*, 1*, 2*, 3*..] all functions of 1 parameter
         --  because * requires two aparameters
         --  myFun 5 == (6*)5 == 6*5
+
+
+-- Lambdas
+collatzGT15' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+vol = map (\(d,l)->(pi/4)*d^2*l) [(2,10),(3,11), (4,12)]
+
+flip'' :: (a -> b -> c) -> b -> a -> c
+flip'' f = \x y -> f y x
+
+
+-- Only folds and horses
+-- left fold
+-- NOTE: left fold MUST have accumulator as first parameter of binary function
+sum' :: (Num a)=> [a] -> a
+sum' = foldl (+) 0
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y ys = foldl (\acc x-> x==y || acc) False ys
+
+-- right fold
+-- NOTE: right fold MUST have accumulator as second parameter of binary function
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f ys = foldr (\x acc->f x:acc) [] ys
+-- with left fold  map'' f ys = foldl (\x acc->acc++[f x]) [] ys
+-- but ++ is more expensive than :
+
+-- NOTE right fold works on infinite lists
