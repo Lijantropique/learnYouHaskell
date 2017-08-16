@@ -104,3 +104,38 @@ map'' f ys = foldr (\x acc->f x:acc) [] ys
 -- but ++ is more expensive than :
 
 -- NOTE right fold works on infinite lists
+
+
+maximum' :: (Ord a) => [a] -> a
+maximum' = foldl1 (\acc x-> max acc x)
+
+reverse' :: [a] -> [a]
+reverse' = foldl (\acc x->x:acc) []
+
+reverse'' :: [a] -> [a]
+reverse'' = foldl (flip (:)) []
+
+product' :: (Num a) => [a] -> a
+product' = foldl (*) 1
+
+product'' :: (Num a) => [a] -> a
+product'' = foldl1 (*)
+
+filter'' :: (a -> Bool) -> [a] -> [a]
+filter'' f = foldl (\acc x->if f x then x:acc else acc) []
+
+head' :: [a] -> a
+head' = foldr1 (\x acc ->x)
+
+last' :: [a] -> a
+last' = foldl1 (\acc x ->x)
+
+-- foldr f [1,2,3] z -> f 1 (f 2 (f 3 z))
+-- foldl g [1,2,3] z -> g (g (g 1 z) 2) 3
+
+
+-- Function application with $
+
+-- f a $ b $ c -> f (a (b c))
+-- collatzGT15' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+collatzGT15'' = length $ filter (\xs -> length xs > 15) $ map chain [1..100]
