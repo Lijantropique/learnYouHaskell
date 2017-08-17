@@ -139,3 +139,7 @@ last' = foldl1 (\acc x ->x)
 -- f a $ b $ c -> f (a (b c))
 -- collatzGT15' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
 collatzGT15'' = length $ filter (\xs -> length xs > 15) $ map chain [1..100]
+-- NOTE: it has the lowest precendence
+
+-- Function composition
+oddSquareSum = sum . takeWhile (<10000) . filter odd . map (^2) $ [1..]
