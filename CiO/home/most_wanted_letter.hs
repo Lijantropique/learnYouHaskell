@@ -17,7 +17,8 @@ checkio string = snd (maximum[(count string x,x)| x <- lowerS string])
 checkio' :: [Char] -> Char
 checkio' xs = let
     rawString = sort $ map toLower $ filter isAlpha xs
-    rawGroup = map (\x->(length x,x!!0)) $ group rawString
+    -- rawGroup = map (\x->(length x,x!!0)) $ group rawString
+    rawGroup = map (\l@(x:xs)->(length l,x)) $ group rawString
     n = fst $ maximum rawGroup
     in snd $ (filter (\(a,b) -> a >= n) rawGroup) !!0
 
