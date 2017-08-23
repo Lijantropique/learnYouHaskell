@@ -145,3 +145,18 @@ lockers = Map.fromList
     ,(200,(Free,2))
     ,(300,(Free,3))
     ]
+
+-- Recursive data structures
+-- data List a = Empty | Pons a (List a) deriving (Show, Read, Eq, Ord)
+
+infixr 5 :-:
+-- infixr -> right associative (4:-:3:-:2) = (4:-:(3:-:2))
+-- infixl -> left associative (4:-:3:-:2) = ((4:-:3):-:2)
+-- the number states the fixity :
+-- 5*4+3 -> (5*4)+3, because *->infixl 7 * and +-> infixl *  6
+data List' a = Empty | a :-: (List' a) deriving (Show, Read, Eq, Ord)
+
+infix 5 .++
+(.++)::List' a -> List' a -> List' a
+Empty .++ ys = ys
+(x:-:xs) .++ ys = x:-: (xs .++ ys)
