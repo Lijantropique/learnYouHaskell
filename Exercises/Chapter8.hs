@@ -9,6 +9,7 @@ module Chapter8
     ) where
 
 import qualified Data.Map as Map
+import Data.List
 
 data Point = Point Float Float deriving (Show)
 data Shape = Circle Point Float | Rectangle Point Point deriving (Show)
@@ -96,4 +97,51 @@ data Foo = Type1 | Type2 deriving (Show)
 a = Type1
 
 plus :: (Num a) => Foo -> a ->a
-plus f a = 1+ a
+plus f a = a+1
+
+-- type synonyms
+type Name = String
+type PhoneNumber = String
+type PhoneBook = [(Name,PhoneNumber)]
+
+phoneBook :: PhoneBook
+phoneBook =
+    [("Betty","555-2938")
+    ,("lucille","205-2928")
+    ]
+
+inPhoneBook :: Name -> PhoneNumber -> PhoneBook -> Bool
+inPhoneBook name pnumber pbook = (name,pnumber) `elem` pbook
+
+type AssocList k v = [(k,v)]
+searchAssocL :: (Eq k) => k -> AssocList k v -> Maybe v
+searchAssocL key assocL  = case find (\(k,v)-> key== k) assocL of
+    -- Nothing -> "message" not possible with Maybe, look below for Either
+    Nothing -> Nothing
+    Just (k,v) -> Just v
+
+type IntMap v = Map.Map Int v
+intmapStr :: IntMap String
+intmapStr = Map.fromList [(1, "one"),(2,"two")]
+
+intmapInt :: IntMap Int
+intmapInt = Map.fromList [(1, 10),(2,20)]
+
+
+data LockerState = Taken | Free deriving (Show, Eq)
+type Code = Int
+type LockerMap = Map.Map Int (LockerState, Code)
+
+lockerLookup :: Int -> LockerMap -> Either String Code
+lockerLookup lockerNo map = case Map.lookup lockerNo map of
+    Nothing -> Left $ "Locker number " ++ show lockerNo ++ " doesn't exist!"
+    Just (state, code) -> if state /= Taken
+                            then Right code
+                            else Left $ "Locker number " ++ show lockerNo ++ " is already taken!"
+
+lockers :: LockerMap
+lockers = Map.fromList
+    [(100,(Taken,1))
+    ,(200,(Free,2))
+    ,(300,(Free,3))
+    ]
