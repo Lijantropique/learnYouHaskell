@@ -185,3 +185,17 @@ treeElem x (Node a left right)
 nums = [8,6,4,1,7,3,5]
 numsTree = foldr treeInsert EmptyTree nums
 numsTree' = foldr treeInsert EmptyTree (reverse nums)
+
+-- Typeclasses 102
+data TrafficLight = Red | Yellow | Green deriving (Ord)
+
+instance Eq TrafficLight where
+    Red == Red          = True
+    Yellow == Yellow    = True
+    Green == Green      = True
+    _ == _              = False
+
+instance Show TrafficLight where
+    show Red    = "Red Light"
+    show Yellow = "Yellow Light"
+    show Green  = "Green Light"
