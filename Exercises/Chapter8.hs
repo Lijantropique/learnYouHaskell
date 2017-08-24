@@ -199,3 +199,36 @@ instance Show TrafficLight where
     show Red    = "Red Light"
     show Yellow = "Yellow Light"
     show Green  = "Green Light"
+
+
+-- Yes/no typeclasses
+class YesNo a where
+    yesno :: a -> Bool
+
+instance YesNo Int where
+    yesno 0 = False
+    yesno _ = True
+
+instance YesNo [a] where
+    yesno [] = False
+    yesno _ = True
+
+instance YesNo Bool where
+    yesno = id
+
+instance YesNo (Maybe a) where
+    yesno (Just _) = True
+    yesno Nothing = False
+
+instance YesNo (Tree a) where
+    yesno EmptyTree = False
+    yesno _ = True
+
+instance YesNo TrafficLight where
+    yesno Red = False
+    yesno _ = True
+
+yesnoIf :: (YesNo y) => y -> a -> a -> a
+yesnoIf yesnoval yesResult noResult = if yesno yesnoval then yesResult else noResult
+
+-- yesnoIf [] "Yes" "No" -> "No"
