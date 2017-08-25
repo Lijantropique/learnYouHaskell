@@ -232,3 +232,10 @@ yesnoIf :: (YesNo y) => y -> a -> a -> a
 yesnoIf yesnoval yesResult noResult = if yesno yesnoval then yesResult else noResult
 
 -- yesnoIf [] "Yes" "No" -> "No"
+
+
+-- Functor
+instance Functor Tree where
+    fmap f EmptyTree = EmptyTree
+    fmap f (Node x left right) = Node (f x) (fmap f left) (fmap f right)
+    
