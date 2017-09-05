@@ -12,14 +12,15 @@ import Log
 -- Parse an error message from the log file
 parseMessage :: String -> LogMessage
 parseMessage (t:' ':xs)
-    |t=='I'     = LogMessage Info n' (s ++ " " ++ msg')
-    |t=='W'     = LogMessage Warning n' (s ++ " " ++ msg')
+    |t=='I'     = LogMessage Info n' s
+    |t=='W'     = LogMessage Warning n' s
     |t=='E'     = LogMessage (Error n') s' msg'
     where
-        (n:s:msg) = words xs
+        (n:msg) = words xs
+        s = if null msg then "" else unwords msg
         n' = (read n:: Int)
-        s' = (read s:: Int)
-        msg' = unwords msg
+        s' = (read (head msg):: Int)
+        msg' = unwords $ tail msg
 parseMessage e  = Unknown e
 
 -- Parse a complete log file
@@ -41,6 +42,27 @@ insert newMessage (Node left logMessage right)
 insert _ msnTree = msnTree
 
 
+-- ===| Exercise 3 |=== --
+-- Build a MessageTree from a list of LogMessage
+build :: [LogMessage] -> MessageTree
+build logList = foldr insert Leaf logList
 
--- build :: [LogMessage] -> MessageTree
--- build logList = foldl insert Leaf logList
+
+-- ===| Exercise 4 |=== --
+-- List of sorted messages in a MessageTree
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf= []
+inOrder (Node left logMessage right) = inOrder left ++ [logMessage] ++ inOrder right
+
+
+-- ===| Exercise 5 |=== --
+-- Return a sorted list of LogMessage with Erros of severity >= 50
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong logList = map getMessage $ filter severeError sortedList
+    where
+        sortedList = inOrder (build logList)
+        severeError (LogMessage (Error n) _ _)
+            |n>=50 = True
+            |otherwise = False
+        severeError _ = False
+        getMessage (LogMessage _ _ msn) = msn
